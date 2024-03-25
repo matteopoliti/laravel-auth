@@ -23,7 +23,7 @@
                         <td class="d-flex gap-2 ">
                             <a href="{{ route('dashboard.projects.edit', $item->id) }}" class="btn btn-primary">Edit</a>
 
-                            <form action="{{ route('dashboard.projects.destroy', $item->id) }}">
+                            <form action="{{ route('dashboard.projects.destroy', $item->id) }}" method="POST">
                                 @csrf
 
                                 @method('DELETE')

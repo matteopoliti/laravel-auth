@@ -49,17 +49,23 @@ class ProjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Project $project)
+    public function edit(string $id)
     {
-        //
+        $project = Project::findOrFail($id);
+        return view('pages.projects.edit', compact('project'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProjectRequest $request, Project $project)
+    public function update(UpdateProjectRequest $request, string $id)
     {
-        //
+        $val_data = $request->validated();
+
+        $project = Project::find($id);
+        $project->update($val_data);
+
+        return redirect()->route('dashboard.projects.index');
     }
 
     /**
@@ -67,6 +73,8 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        //
+        $project->delete();
+
+        return redirect()->route('dashboard.projects.index');
     }
 }
