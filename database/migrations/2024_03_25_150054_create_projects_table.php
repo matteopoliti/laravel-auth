@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title', 100);
             $table->text('description')->nullable();
             $table->date('project_start_date')->nullable();
+            $table->string('slug');
             $table->timestamps();
         });
     }
