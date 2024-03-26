@@ -21,9 +21,9 @@
                         <td>{{ $item->title }}</td>
                         <td>{{ $item->description }}</td>
                         <td class="d-flex gap-2 ">
-                            <a href="{{ route('dashboard.projects.edit', $item->id) }}" class="btn btn-primary">Edit</a>
+                            <a href="{{ route('dashboard.projects.edit', $item->slug) }}" class="btn btn-primary">Edit</a>
 
-                            <form action="{{ route('dashboard.projects.destroy', $item->id) }}" method="POST">
+                            <form action="{{ route('dashboard.projects.destroy', $item->slug) }}" method="POST">
                                 @csrf
 
                                 @method('DELETE')

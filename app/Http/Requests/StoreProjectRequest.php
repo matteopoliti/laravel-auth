@@ -24,7 +24,7 @@ class StoreProjectRequest extends FormRequest
         return [
             'title' => ['required', 'unique:projects', 'max:150'],
             'description' => ['nullable'],
-            'project_start_date' => ['nullable']
+            'project_start_date' => ['nullable'],
         ];
     }
 }

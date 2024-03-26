@@ -33,6 +33,9 @@ class ProjectController extends Controller
     {
         $val_data = $request->validated();
 
+        $slug = Project::generateSlug($request->title);
+        $val_data['slug'] = $slug;
+
         $newProject = Project::create($val_data);
 
         return redirect()->route('dashboard.projects.index');
@@ -49,21 +52,24 @@ class ProjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Project $project)
     {
-        $project = Project::findOrFail($id);
+
         return view('pages.projects.edit', compact('project'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProjectRequest $request, string $id)
+    public function update(UpdateProjectRequest $request, Project $project)
     {
         $val_data = $request->validated();
 
-        $project = Project::find($id);
+        $slug = Project::generateSlug($request->title);
+        $val_data['slug'] = $slug;
+
         $project->update($val_data);
+
 
         return redirect()->route('dashboard.projects.index');
     }
