@@ -3,7 +3,7 @@
 @section('content')
     <main class="container py-3">
         <h1 class="text-success">Edit Project</h1>
-        <form action="{{ route('dashboard.projects.update', $project->slug) }}" method="POST">
+        <form action="{{ route('dashboard.projects.update', $project->slug) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
@@ -24,6 +24,27 @@
             </div>
 
             <div class="mb-3">
+                <div>
+                    @if ($project->cover_image)
+                        <img src="{{ asset('/storage/' . $project->cover_image) }}" alt="{{ $project->title }}">
+                    @endif
+                </div>
+                <label for="cover_image" class="form-label">Upload cover</label>
+                <input type="file"
+                    class="form-control @error('cover_image')
+                   is-invalid
+                   @enderror"
+                    id="cover_image" name="cover_image">
+                @error('cover_image')
+                    <div class="alert alert-danger mt-1">
+
+                        {{ $message }}
+
+                    </div>
+                @enderror
+            </div>
+
+            <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
                 <textarea class="form-control" id="description" name="description" rows="3">{{ old('description') ?? $project->description }}</textarea>
             </div>
@@ -33,6 +54,7 @@
                 <input type="date" class="form-control" id="project_start_date" name="project_start_date"
                     value="{{ old('project_start_date') ?? $project->project_start_date }}">
             </div>
+
 
             <button type="submit" class="btn btn-primary">Edit</button>
         </form>

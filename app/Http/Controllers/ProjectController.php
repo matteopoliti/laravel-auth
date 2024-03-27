@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -36,6 +37,11 @@ class ProjectController extends Controller
         $slug = Project::generateSlug($request->title);
         $val_data['slug'] = $slug;
 
+        if ($request->hasFile('cover_image')) {
+            $img_path = Storage::disk('public')->put('images', $request->cover_image);
+            $val_data['cover_image'] = $img_path;
+        }
+
         $newProject = Project::create($val_data);
 
         return redirect()->route('dashboard.projects.index');
@@ -46,7 +52,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        //
+        return view('pages.projects.show', compact('project'));
     }
 
     /**
@@ -68,6 +74,14 @@ class ProjectController extends Controller
         $slug = Project::generateSlug($request->title);
         $val_data['slug'] = $slug;
 
+        if ($request->hasFile('cover_image')) {
+            if ($project->cover_image) {
+                Storage::delete($project->cover_image);
+            }
+            $img_path = Storage::disk('public')->put('images', $request->cover_image);
+            $val_data['cover_image'] = $img_path;
+        }
+
         $project->update($val_data);
 
 
@@ -79,6 +93,9 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+        if ($project->cover_image) {
+            Storage::delete($project->cover_image);
+        }
         $project->delete();
 
         return redirect()->route('dashboard.projects.index');

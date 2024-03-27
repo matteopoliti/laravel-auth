@@ -11,6 +11,7 @@
                     <th scope="col">Id</th>
                     <th scope="col">Title</th>
                     <th scope="col">Description</th>
+                    <th scope="col">Images</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -18,8 +19,11 @@
                 @foreach ($projects as $item)
                     <tr>
                         <th scope="row">{{ $item->id }}</th>
-                        <td>{{ $item->title }}</td>
+
+                        <td><a href="{{ route('dashboard.projects.show', $item->slug) }}">{{ $item->title }}</a></td>
+
                         <td>{{ $item->description }}</td>
+                        <td>{{ $item->cover_image }}</td>
                         <td class="d-flex gap-2 ">
                             <a href="{{ route('dashboard.projects.edit', $item->slug) }}" class="btn btn-primary">Edit</a>
 

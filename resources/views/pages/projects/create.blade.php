@@ -3,7 +3,7 @@
 @section('content')
     <main class="container py-3">
         <h1 class="text-success">Create Project</h1>
-        <form action="{{ route('dashboard.projects.store') }}" method="POST">
+        <form action="{{ route('dashboard.projects.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <div class="mb-3">
@@ -21,6 +21,21 @@
                     </div>
                 @enderror
             </div>
+            <div class="mb-3">
+                <label for="cover_image" class="form-label">Upload cover</label>
+                <input type="file"
+                    class="form-control @error('cover_image')
+                    is-invalid
+                    @enderror"
+                    id="cover_image" name="cover_image">
+                @error('cover_image')
+                    <div class="alert alert-danger mt-1">
+
+                        {{ $message }}
+
+                    </div>
+                @enderror
+            </div>
 
             <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
@@ -31,6 +46,8 @@
                 <label for="project_start_date" class="form-label">Project start date</label>
                 <input type="date" class="form-control" id="project_start_date" name="project_start_date">
             </div>
+
+
 
             <button type="submit" class="btn btn-primary">Crea</button>
         </form>

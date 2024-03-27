@@ -28,7 +28,8 @@ class UpdateProjectRequest extends FormRequest
                 Rule::unique('projects')->ignore($this->project), 'max:150'
             ],
             'description' => ['nullable'],
-            'project_start_date' => ['nullable']
+            'project_start_date' => ['nullable'],
+            'cover_image' => ['nullable', 'image']
         ];
     }
 }
